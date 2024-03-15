@@ -20,60 +20,30 @@ public class Main {
 
         FiniteAutomaton automaton = new FiniteAutomaton(alphabet, states, "q0", Set.of("q2"), transitions);
         System.out.println(automaton);
+
+        System.out.println("The automaton is DFA: " + automaton.isDFA());
+
         System.out.println();
         System.out.println("Conversion to DFA:");
         System.out.println(automaton.toDFA());
-//        Grammar grammar = automaton.toGrammar();
-//        System.out.println("Converted automaton to grammar:");
-//        System.out.println(grammar);
-//
-//        String word = grammar.generateString();
-//        System.out.println(word);
-//        System.out.println(automaton.stringBelongToLanguage(word));
+        System.out.println("The automaton is DFA: " + automaton.toDFA().isDFA());
 
-        System.out.println("The converted automaton is DFA: " + automaton.toDFA().isDFA());
-//        System.out.println(grammar.getCategory());
-        System.out.println(automaton.toDFA());
+        System.out.println("Converted to Grammar:");
+        Grammar grammar = automaton.toGrammar();
+        System.out.println(grammar);
+
+        System.out.println("Grammar type: " + grammar.getCategory());
+
         try {
-            automaton.toImage("graph.png");
+            automaton.toImage("graph1.png");
+            automaton.toDFA().toImage("graph2.png");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        List<String> terminals = Arrays.asList("a", "b", "c");
-        List<String> nonTerminals = Arrays.asList("S", "A", "B", "C");
-        Map<String, List<String>> rules = new HashMap<>();
-        rules.put("S", Arrays.asList("aA"));
-        rules.put("A", Arrays.asList("Ab", "aB", "aA"));
-        rules.put("BC", Arrays.asList(""));
-        rules.put("B", Arrays.asList("Ca", "bB"));
 
-        Grammar grammar2 = new Grammar(terminals, nonTerminals, rules, "S");
-        System.out.println(grammar2);
-        System.out.println();
-        System.out.println(grammar2.getCategory());
-//
-//
-//        FiniteAutomaton automaton2 = grammar2.toFiniteAutomaton();
-//        System.out.println(automaton2);
-//
-//        Grammar grammar3 = automaton2.toGrammar();
-//        System.out.println(grammar3);
-//
-//        FiniteAutomaton automaton = automaton2.toDFA();
-//        System.out.println(automaton);
 
-//        System.out.println("\nDo you want to check a string? (y/n)");
-//        String input = scanner.nextLine();
-//        if (input.equals("y")){
-//            while (true) {
-//                System.out.print("Enter the word(empty line to exit): ");
-//                input = scanner.nextLine();
-//                if (input.isBlank()) {
-//                    break;
-//                }
-//                System.out.println("Belongs to language: " + automaton.stringBelongToLanguage(input));
-//            }
-//        }
+
+
         
     }
 }

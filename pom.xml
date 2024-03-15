@@ -11,6 +11,7 @@
     <modules>
         <module>regular-grammars</module>
         <module>finite-automata</module>
+        <module>lexer-scanner</module>
     </modules>
 
     <properties>
