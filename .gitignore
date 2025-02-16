@@ -1,0 +1,23 @@
+# Maven specific
+/target/
+/*.log
+/.mvn/
+/.idea/
+/*.iml
+
+# VSCode specific
+.vscode/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Java specific
+*.class
+*.jar
+*.war
+*.ear
+
+# IntelliJ IDEA specific
+/.idea
+*.iml
