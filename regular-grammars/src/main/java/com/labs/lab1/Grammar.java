@@ -1,7 +1,6 @@
 package com.labs.lab1;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +46,8 @@ public class Grammar {
 
         for (String nonTerminal : rules.keySet()) {
             for (String result : rules.get(nonTerminal)) {
+                // String input = (Character.isLowerCase(result.charAt(0))) ? Character.toString(result.charAt(0)) : "";
+                // Transition transition = new Transition(nonTerminal, input);
                 Transition transition = new Transition(nonTerminal, Character.toString(result.charAt(0)));
                 transitions.putIfAbsent(transition, new ArrayList<>());
                 transitions.get(transition).add(Character.toString((result.length() > 1) ? result.charAt(1) : 'X'));
@@ -61,6 +62,21 @@ public class Grammar {
     private boolean hasNonTerminals(String string) {
 
         return nonTerminals.stream().anyMatch(string::contains);
+    }
+    
+    @Override
+    public String toString() {
+
+        String result = "G = (Vn, Vt, S, P)";
+        result = result + "\nVn = {" + String.join(", ", nonTerminals) + "}";
+        result = result + "\nVt = {" + String.join(", ", nonTerminals) + "}";
+        result = result + "\nP = {";
+        for (String rule : this.rules.keySet()) {
+            result = result + "\n\t" + rule + " --> " + String.join(" | ", this.rules.get(rule));
+        }
+        result = result + "\n    }";
+        return result;
+
     }
 
 

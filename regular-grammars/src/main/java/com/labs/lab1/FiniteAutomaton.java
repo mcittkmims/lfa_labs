@@ -44,13 +44,21 @@ public class FiniteAutomaton {
             }
         }
 
+
         return false;
         
     }
 
     @Override
     public String toString() {
-        return "" + this.transitions;
+        String result = "Q = {" + String.join(", ", this.states) + "}";
+        result = result + "\nΣ = {" + String.join(" ,", this.alphabet) + "}";
+        result = result + "\nq0 = " + this.initialState;
+        result = result + "\nF = " + this.finalState;
+        for (Transition transition : this.transitions.keySet()) {
+            result = result + "\n\t" + transition + " = {" + String.join(", ", this.transitions.get(transition)) + "}";
+        }
+        return result;
     }
 
 }
