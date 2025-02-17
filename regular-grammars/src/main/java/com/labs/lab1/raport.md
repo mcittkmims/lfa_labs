@@ -116,10 +116,8 @@ public class Main {
 ```
 
 
-- In the `main()` method from `Main`, I initialize a **context-free grammar** using lists for **terminals**, **non-terminals**, and a `HashMap` for **production rules**, then pass them to the `Grammar` class.  
-- I call `toFiniteAutomaton()` to convert the grammar into a **finite automaton** and print its structure.  
-- Using `generateString()`, I create **random words**, check if they belong to the language with `stringBelongToLanguage()`, and print the results.  
-- A `Scanner` is used to let users **manually test strings**, looping until an empty input is provided.
+In the `main()` method from `Main`, I initialize a **context-free grammar** by defining lists for **terminals**, **non-terminals**, and a `HashMap` to store **production rules**, which are then passed to the `Grammar` class. The `toFiniteAutomaton()` method is called to convert the grammar into a **finite automaton**, and its structure is printed. Using the `generateString()` method, I generate **random words**, verify their validity using `stringBelongToLanguage()`, and display the results. Additionally, a `Scanner` is used to allow users to **manually test strings**, with a loop that continues accepting input until an empty line is entered.  
+
 
 ```java
 public String generateString() {
@@ -138,10 +136,7 @@ public String generateString() {
 
 ```
 
-- The method `generateString()` from the `Grammar` class, **generates a random string** starting from the `start` symbol by repeatedly replacing non-terminals with their corresponding production rules.  
-- It uses `hasNonTerminals(result)` to check if the string still contains any **non-terminals**.  
-- A `for` loop iterates through the `nonTerminals` list, and when a non-terminal is found in `result`, `replaceFirst()` is used to substitute it with a randomly chosen production rule using `random.nextInt()`.  
-- The process continues until no non-terminals remain, at which point the final generated string is returned.  
+The `generateString()` method from the `Grammar` class generates a **random string** starting from the `start` symbol by continuously replacing non-terminals with their corresponding production rules. It uses `hasNonTerminals(result)` to check if the string still contains any **non-terminals**. A `for` loop iterates through the `nonTerminals` list, and when a non-terminal is found in `result`, `replaceFirst()` is used to substitute it with a randomly chosen production rule, selected using `random.nextInt()`. This process repeats until no non-terminals remain, at which point the final generated string is returned.  
 
 ```java
 public FiniteAutomaton toFiniteAutomaton() {
@@ -165,11 +160,7 @@ public FiniteAutomaton toFiniteAutomaton() {
         return new FiniteAutomaton(alphabet, states, initialState, finalState, transitions);
     }
 ```
-- The method `toFiniteAutomaton()`  from `Grammar`**converts the grammar into a finite automaton** by constructing states, transitions, and other components.  
-- The **alphabet** is initialized from `terminals`, and **states** are derived from `nonTerminals` with an additional final state `"X"`.  
-- The **initial state** is set to `start`, and the final state is `"X"`.  
-- The **transition map** (`transitions`) is built by iterating over `rules`, where each **non-terminal** is mapped to a transition based on its production rules.  
-- A `Transition` object is created for each rule, using the first character as input, and the second is placed as an output state in a list to the respective transition. If there is no second character, the state is considered final.
+The `toFiniteAutomaton()` method from `Grammar` **converts the grammar into a finite automaton** by constructing states, transitions, and other necessary components. The **alphabet** is initialized from `terminals`, while **states** are derived from `nonTerminals`, with an additional final state `"X"`. The **initial state** is set to `start`, and the final state is `"X"`. A **transition map** (`transitions`) is created by iterating over `rules`, where each **non-terminal** is mapped to a transition based on its production rules. A `Transition` object is created for each rule, using the first character as input, and the second character (if present) is placed as an output state in a list associated with that transition. If no second character exists, the state is considered final.  
 
 ```java
 public class Transition {
@@ -182,8 +173,7 @@ public class Transition {
     }
 }
 ```
-
-- The class `Transition` represents a **state transition** in the finite automaton with a **current state** and an **input symbol**.
+The class `Transition` represents a **state transition** in the finite automaton with a **current state** and an **input symbol**.
 
 ```java
     public boolean stringBelongToLanguage(final String inputString) {
@@ -215,11 +205,8 @@ public class Transition {
         
     }
 ```
-- The first method `stringBelongToLanguage(final String inputString)` **validates the input** and calls the recursive version with the **initial state**.  
-- The recursive method ` stringBelongToLanguage(List<String> possibleStates, final String inputString)` processes the string **character by character**, checking transitions in `this.transitions`.  
-- If `inputString` is empty, it returns `true` if a **final state** is reached.  
-- Otherwise, it creates a `Transition` for the first character, looks up possible next states, and recursively checks the remaining string. 
-- Returns `true` if any path leads to the final state, otherwise `false`.   
+The `stringBelongToLanguage(final String inputString)` method first **validates the input** and calls the recursive version with the **initial state**. The recursive method `stringBelongToLanguage(List<String> possibleStates, final String inputString)` processes the string **character by character**, checking transitions stored in `this.transitions`. If `inputString` is empty, it returns `true` if a **final state** is reached. Otherwise, it creates a `Transition` for the first character, finds possible next states, and recursively checks the remaining string. The method ultimately returns `true` if any path leads to the final state; otherwise, it returns `false`.  
+  
 ## Conclusions / Screenshots / Results
 
 ### Results
