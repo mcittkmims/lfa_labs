@@ -83,7 +83,7 @@ Finite automata and regular expressions form the foundation for lexical analysis
 
 ## Implementation description
 
-```
+```java
 public class Main {
     public static void main(String[] args) {
 
@@ -111,30 +111,178 @@ public class Main {
             System.out.println("\n\tGenerated word: " + generatedString);
             System.out.println("\tBelongs to language: " + automaton.stringBelongToLanguage(generatedString));
         }
-
-        System.out.println("\nDo you want to check a string? (y/n)");
-        String input = scanner.nextLine();
-        if (input.equals("y")){
-            while (true) {
-                System.out.print("Enter the word(empty line to exit): ");
-                input = scanner.nextLine();
-                if (input.isBlank()) {
-                    break;
-                }
-                System.out.println("Belongs to language: " + automaton.stringBelongToLanguage(input));
-            }
-        }
-        
     }
 }
 ```
 
-- I define a **context-free grammar** with terminals, non-terminals, and production rules, then convert it into a **finite automaton**.  
-- The program **generates random strings**, checks if they belong to the language, and allows users to manually test their own strings.  
-- User interaction is handled via **Scanner**, enabling continuous string validation until the user chooses to exit.  
+
+- In the `main()` method from `Main`, I initialize a **context-free grammar** using lists for **terminals**, **non-terminals**, and a `HashMap` for **production rules**, then pass them to the `Grammar` class.  
+- I call `toFiniteAutomaton()` to convert the grammar into a **finite automaton** and print its structure.  
+- Using `generateString()`, I create **random words**, check if they belong to the language with `stringBelongToLanguage()`, and print the results.  
+- A `Scanner` is used to let users **manually test strings**, looping until an empty input is provided.
+
+```java
+public String generateString() {
+        String result = start;
+        while (hasNonTerminals(result)) {
+            for (String nonTerminal : nonTerminals) {
+                if (result.contains(nonTerminal)) {
+                    result = result.replaceFirst(nonTerminal,
+                            rules.get(nonTerminal).get(random.nextInt(rules.get(nonTerminal).size())));
+                    continue;
+                }
+            }
+        }
+        return result;
+    }
+
+```
+
+- The method `generateString()` from the `Grammar` class, **generates a random string** starting from the `start` symbol by repeatedly replacing non-terminals with their corresponding production rules.  
+- It uses `hasNonTerminals(result)` to check if the string still contains any **non-terminals**.  
+- A `for` loop iterates through the `nonTerminals` list, and when a non-terminal is found in `result`, `replaceFirst()` is used to substitute it with a randomly chosen production rule using `random.nextInt()`.  
+- The process continues until no non-terminals remain, at which point the final generated string is returned.  
+
+```java
+public FiniteAutomaton toFiniteAutomaton() {
+        List<String> alphabet = new ArrayList<>(this.terminals);
+        List<String> states = new ArrayList<>(this.nonTerminals);
+        states.add("X");
+        String initialState = this.start;
+        String finalState = "X";
+        Map<Transition, List<String>> transitions = new HashMap<>();
+
+        for (String nonTerminal : rules.keySet()) {
+            for (String result : rules.get(nonTerminal)) {
+                // String input = (Character.isLowerCase(result.charAt(0))) ? Character.toString(result.charAt(0)) : "";
+                // Transition transition = new Transition(nonTerminal, input);
+                Transition transition = new Transition(nonTerminal, Character.toString(result.charAt(0)));
+                transitions.putIfAbsent(transition, new ArrayList<>());
+                transitions.get(transition).add(Character.toString((result.length() > 1) ? result.charAt(1) : 'X'));
+            }
+        }
+        
+        return new FiniteAutomaton(alphabet, states, initialState, finalState, transitions);
+    }
+```
+- The method `toFiniteAutomaton()`  from `Grammar`**converts the grammar into a finite automaton** by constructing states, transitions, and other components.  
+- The **alphabet** is initialized from `terminals`, and **states** are derived from `nonTerminals` with an additional final state `"X"`.  
+- The **initial state** is set to `start`, and the final state is `"X"`.  
+- The **transition map** (`transitions`) is built by iterating over `rules`, where each **non-terminal** is mapped to a transition based on its production rules.  
+- A `Transition` object is created for each rule, using the first character as input, and the second is placed as an output state in a list to the respective transition. If there is no second character, the state is considered final.
+
+```java
+public class Transition {
+    private String state;
+    private String input;
+
+    public Transition(String state, String input) {
+        this.state = state;
+        this.input = input;
+    }
+}
+```
+
+- The class `Transition` represents a **state transition** in the finite automaton with a **current state** and an **input symbol**.
+
+```java
+    public boolean stringBelongToLanguage(final String inputString) {
+        if (inputString == null || inputString.isEmpty()) {
+            return false;
+        }
+
+        return stringBelongToLanguage(Arrays.asList(this.initialState),inputString);
+    }
+
+    public boolean stringBelongToLanguage(List<String> possibleStates, final String inputString) {
+        if (possibleStates == null) {
+            return false;
+        }
+
+        if (inputString.isEmpty()) {
+            return possibleStates.contains(this.finalState);
+        }
+
+        for (String possibleState : possibleStates) {
+            Transition transition = new Transition(possibleState, Character.toString(inputString.charAt(0)));
+            if (stringBelongToLanguage(this.transitions.get(transition), inputString.substring(1))) {
+                return true;
+            }
+        }
 
 
+        return false;
+        
+    }
+```
+- The first method `stringBelongToLanguage(final String inputString)` **validates the input** and calls the recursive version with the **initial state**.  
+- The recursive method ` stringBelongToLanguage(List<String> possibleStates, final String inputString)` processes the string **character by character**, checking transitions in `this.transitions`.  
+- If `inputString` is empty, it returns `true` if a **final state** is reached.  
+- Otherwise, it creates a `Transition` for the first character, looks up possible next states, and recursively checks the remaining string. 
+- Returns `true` if any path leads to the final state, otherwise `false`.   
 ## Conclusions / Screenshots / Results
+
+### Results
+```
+Grammar: 
+G = (Vn, Vt, S, P)
+Vn = {S, A, B, C}
+Vt = {S, A, B, C}
+P = {
+        A --> b | aB | bA
+        B --> bC | aB
+        S --> bA
+        C --> cA
+    }
+```
+The first part of output is the grammar in a string format based on the variant.
+
+```
+Finite Automaton: 
+Q = {S, A, B, C, X}
+Σ = {a ,b}
+q0 = S
+F = X
+        δ(B, a) = {B}
+        δ(S, b) = {A}
+        δ(A, a) = {B}
+        δ(B, b) = {C}
+        δ(C, c) = {A}
+        δ(A, b) = {X, A}
+```
+The second part is the Finite Automaton converted from the previous grammar.
+```
+5 generated strings: 
+
+        Generated word: babcbbb
+        Belongs to language: true
+
+        Generated word: bb
+        Belongs to language: true
+
+        Generated word: babcbabcbaabcaabcabcbabcb
+        Belongs to language: true
+
+        Generated word: bb
+        Belongs to language: true
+
+        Generated word: bbb
+        Belongs to language: true
+```
+Then 5 strings are generated by the `generateString()` method. The strings are shown to the screen also validated by the Finite Automaton with the method `stringBelongToLanguage()`.
+
+```
+Do you want to check a string? (y/n)
+y
+Enter the word(empty line to exit): baab
+Belongs to language: false
+Enter the word(empty line to exit): bbb
+Belongs to language: true
+```
+The final part asks the user if they want to check any custom strings. The strings will be checked by `stringBelongToLanguage()` based on the variant rules. The user will be informed if the strings belongs or not to the language.<img width="541" alt="image" src="https://github.com/user-attachments/assets/d2111092-64cd-49ae-b7cf-abc154675645" />
+
+
+
 
 
 ## References
