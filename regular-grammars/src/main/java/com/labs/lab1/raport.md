@@ -279,10 +279,29 @@ Belongs to language: false
 Enter the word(empty line to exit): bbb
 Belongs to language: true
 ```
-The final part asks the user if they want to check any custom strings. The strings will be checked by `stringBelongToLanguage()` based on the variant rules. The user will be informed if the strings belongs or not to the language.<img width="541" alt="image" src="https://github.com/user-attachments/assets/d2111092-64cd-49ae-b7cf-abc154675645" />
+The final part asks the user if they want to check any custom strings. The strings will be checked by `stringBelongToLanguage()` based on the variant rules. The user will be informed if the strings belongs or not to the language.
 
 
+### Conclusions
+<p align="center">
+  <img width="600" src="nfa_graph.png" alt="Finite Automaton Graph"/>
+</p>
 
+
+During this lab on **Introduction to Formal Languages, Regular Grammars, and Finite Automata**, I gained a deeper understanding of **alphabets, languages, their classifications, formal grammars, and finite automata (FA)**. I successfully set up a **GitHub repository** for my evolving project and chose **Java** as the programming language to implement the required tasks. As part of my assignment, I developed a `Grammar` class, which includes the `generateString()` method for generating valid strings based on production rules and the `toFiniteAutomaton()` method for converting the grammar into a **Finite Automaton**. Additionally, I implemented a `FiniteAutomaton` class, where the `stringBelongToLanguage()` method checks whether a given string can be derived through state transitions using recursion. Throughout this process, I improved my understanding of **Regular Grammars**, their differences from other grammar types, and how to convert them into **Finite Automata**. To further enhance my learning, I used **Graphviz** to create a **visual representation** of my FA, making it easier to analyze state transitions.  
 
 
 ## References
+<a id="ref1"></a>[1] Laboratory Work 1: Intro to formal languages. Regular grammars. Finite Automata. task.md - Crețu Dumitru, Drumea Vasile, Cojuhari Irina - 
+https://github.com/filpatterson/DSL_laboratory_works/blob/master/1_RegularGrammars/task.md
+
+<a id="ref2"></a>[2] "Formal Languages and Finite Automata guide for practical lessons" - COJUHARI Irina, DUCA Ludmila, FIODOROV Ion - 
+https://else.fcim.utm.md/pluginfile.php/110458/mod_resource/content/0/LFPC_Guide.pdf
+
+<a id="ref3"></a>[3] Presentation on "Formal Languages and Compiler Design" - conf. univ., dr. Irina Cojuhari - 
+https://else.fcim.utm.md/pluginfile.php/110457/mod_resource/content/0/Theme_1.pdf
+
+<a id="ref4"></a>[4] Presentation on "Regular Language. Finite Automata" - TUM - 
+https://drive.google.com/file/d/1rBGyzDN5eWMXTNeUxLxmKsf7tyhHt9Jk/view
+
+<a id="ref5"></a>[5] Graphviz Visual Editor - magjac Interactive - https://magjac.com/graphviz-visual-editor/
