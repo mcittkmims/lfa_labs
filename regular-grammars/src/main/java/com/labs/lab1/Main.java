@@ -23,6 +23,6 @@ public class Main {
         System.out.println(grammar.generateString());
         System.out.println(grammar.generateString());
         FiniteAutomaton automaton = grammar.toFiniteAutomaton();
-        System.out.println(automaton.stringBelongToLanguage("bbbaabcabcbabcabcbbabcabcabcaabcabcbabcbaaabcbbabcb"));
+        System.out.println(automaton.stringBelongToLanguage("bbbaabcabcbabcabcbbabcabcabcaabcabcbabcbaaabcbbabcbc"));
     }
 }

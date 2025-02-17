@@ -21,30 +21,31 @@ public class FiniteAutomaton {
     }
 
     public boolean stringBelongToLanguage(final String inputString) {
-        List<String> possibleCurrentStates = Arrays.asList(initialState);
-        boolean stateFound;
-
-        for (int i = 0; i < inputString.length(); i++) {
-            stateFound = false;
-            for (String possibleCurrentState : possibleCurrentStates) {
-                Transition transition = new Transition(possibleCurrentState, Character.toString(inputString.charAt(i)));
-                if (transitions.get(transition) != null) {
-                    possibleCurrentStates = transitions.get(transition);
-                    stateFound = true;
-                    break;
-                }
-
-            }
-            if (!stateFound) {
-                return false;
-            }
+        if (inputString == null || inputString.isEmpty()) {
+            return false;
         }
 
-        if (possibleCurrentStates.contains(finalState)) {
-            return true;
+        return stringBelongToLanguage(Arrays.asList(this.initialState),inputString);
+    }
+
+    public boolean stringBelongToLanguage(List<String> possibleStates, final String inputString) {
+        if (possibleStates == null) {
+            return false;
+        }
+
+        if (inputString.isEmpty()) {
+            return possibleStates.contains(this.finalState);
+        }
+
+        for (String possibleState : possibleStates) {
+            Transition transition = new Transition(possibleState, Character.toString(inputString.charAt(0)));
+            if (stringBelongToLanguage(this.transitions.get(transition), inputString.substring(1))) {
+                return true;
+            }
         }
 
         return false;
+        
     }
 
     @Override
