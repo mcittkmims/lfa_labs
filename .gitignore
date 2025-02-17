@@ -1,5 +1,5 @@
 # Maven specific
-/target/
+target/
 /*.log
 /.mvn/
 /.idea/
