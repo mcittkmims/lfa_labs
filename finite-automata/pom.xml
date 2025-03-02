@@ -9,8 +9,8 @@
           <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.labs.lab1</groupId>
-    <artifactId>regular-grammars</artifactId>
+    <groupId>com.labs.lab2</groupId>
+    <artifactId>finite-automata</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
