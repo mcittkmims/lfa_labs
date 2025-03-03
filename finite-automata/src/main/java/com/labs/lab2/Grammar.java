@@ -51,7 +51,7 @@ public class Grammar {
             }
         }
         
-        return new FiniteAutomaton(alphabet, states, initialState, finalState, transitions);
+        return new FiniteAutomaton(alphabet, states, initialState, Set.of(finalState), transitions);
 
         
     }
@@ -68,7 +68,10 @@ public class Grammar {
             String endsWithRegex = "^(?:" + String.join("|", this.terminals) + ")*(?:" + String.join("|", this.nonTerminals) + ")$";
             String startsWithRegex = "^(" + String.join("|", this.nonTerminals) + ")(?:" + String.join("|", this.terminals) + ")*$";
             String terminalsOnlyRegex = "^(?:" + String.join("|", this.terminals) + ")+$";
-            if (this.rules.values().stream().allMatch(l -> l.stream().allMatch(s -> Pattern.compile(endsWithRegex).matcher(s).matches() || s.isEmpty() || Pattern.compile(terminalsOnlyRegex).matcher(s).matches()) || l.stream().allMatch(s -> Pattern.compile(startsWithRegex).matcher(s).matches() || s.isEmpty() || Pattern.compile(terminalsOnlyRegex).matcher(s).matches()))){
+            if (this.rules.values().stream()
+                    .allMatch(l -> l.stream().allMatch(s -> (Pattern.compile(endsWithRegex).matcher(s).matches() || s.isEmpty() || Pattern.compile(terminalsOnlyRegex).matcher(s).matches()) )) ||
+                this.rules.values().stream()
+                    .allMatch(l -> l.stream().allMatch(s -> (Pattern.compile(startsWithRegex).matcher(s).matches() || s.isEmpty() || Pattern.compile(terminalsOnlyRegex).matcher(s).matches()) ))){
                 return "Type 3";
             }
             return "Type 2";

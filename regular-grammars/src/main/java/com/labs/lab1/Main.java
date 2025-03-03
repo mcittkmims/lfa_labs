@@ -11,7 +11,7 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        List<String> terminals = Arrays.asList("a", "b");
+        List<String> terminals = Arrays.asList("a", "b", "c");
         List<String> nonTerminals = Arrays.asList("S", "A", "B", "C");
         Map<String, List<String>> rules = new HashMap<>();
         rules.put("S", Arrays.asList("bA"));
