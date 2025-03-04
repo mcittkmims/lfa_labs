@@ -20,30 +20,37 @@ public class Main {
 
         FiniteAutomaton automaton = new FiniteAutomaton(alphabet, states, "q0", Set.of("q2"), transitions);
         System.out.println(automaton);
-        Grammar grammar = automaton.toGrammar();
-        System.out.println(grammar);
+        System.out.println();
+        System.out.println("Conversion to DFA:");
+        System.out.println(automaton.toDFA());
+//        Grammar grammar = automaton.toGrammar();
+//        System.out.println("Converted automaton to grammar:");
+//        System.out.println(grammar);
+//
+//        String word = grammar.generateString();
+//        System.out.println(word);
+//        System.out.println(automaton.stringBelongToLanguage(word));
 
-        String word = grammar.generateString();
-        System.out.println(word);
-        System.out.println(automaton.stringBelongToLanguage(word));
-        System.out.println(automaton.isDFA());
-        System.out.println(grammar.getCategory());
+        System.out.println("The converted automaton is DFA: " + automaton.toDFA().isDFA());
+//        System.out.println(grammar.getCategory());
         System.out.println(automaton.toDFA());
         try {
-            automaton.toDFA().toImage("graph.png");
+            automaton.toImage("graph.png");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-//        List<String> terminals = Arrays.asList("a", "b", "c");
-//        List<String> nonTerminals = Arrays.asList("S", "A", "B", "C");
-//        Map<String, List<String>> rules = new HashMap<>();
-//        rules.put("S", Arrays.asList("aA"));
-//        rules.put("A", Arrays.asList("b", "aB", "aA"));
-//        rules.put("C", Arrays.asList("cA"));
-//        rules.put("B", Arrays.asList("aC", "bB"));
-//
-//        Grammar grammar2 = new Grammar(terminals, nonTerminals, rules, "S");
-//        System.out.println(grammar2);
+        List<String> terminals = Arrays.asList("a", "b", "c");
+        List<String> nonTerminals = Arrays.asList("S", "A", "B", "C");
+        Map<String, List<String>> rules = new HashMap<>();
+        rules.put("S", Arrays.asList("aA"));
+        rules.put("A", Arrays.asList("Ab", "aB", "aA"));
+        rules.put("BC", Arrays.asList(""));
+        rules.put("B", Arrays.asList("Ca", "bB"));
+
+        Grammar grammar2 = new Grammar(terminals, nonTerminals, rules, "S");
+        System.out.println(grammar2);
+        System.out.println();
+        System.out.println(grammar2.getCategory());
 //
 //
 //        FiniteAutomaton automaton2 = grammar2.toFiniteAutomaton();
