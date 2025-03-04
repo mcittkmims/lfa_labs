@@ -403,11 +403,12 @@ The transitions in the DFA are now uniquely defined for each input and state com
 The `isDFA()` method confirms that the converted automaton is indeed a DFA, returning `true`, indicating that the conversion was successful.
 
 <p align="center">
-  <img width="600" src="result1.png" alt="Finite Automaton Graph"/>
+  <img width="400" src="result1.png" alt="Finite Automaton Graph"/>
 </p>
 The initial graph resulted after calling the method `toImage()`.
+
 <p align="center">
-  <img width="600" src="result2.png" alt="Finite Automaton Graph"/>
+  <img width="400" src="result2.png" alt="Finite Automaton Graph"/>
 </p>
 Now after converting the graph to a DFA, we call the method `toImage()` again.
 
