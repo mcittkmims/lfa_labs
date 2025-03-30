@@ -15,7 +15,6 @@ public class RegExCombinationGenerator {
     public List<String> generateCombinations(String regex) {
         List<Token> tokens = parser.parse(regex);
 
-        // For debugging
         System.out.println("Parsed tokens:");
         for (Token token : tokens) {
             System.out.println(token);
