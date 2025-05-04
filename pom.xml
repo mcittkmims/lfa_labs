@@ -14,6 +14,7 @@
         <module>lexer-scanner</module>
         <module>regular_expressions</module>
         <module>chomsky-normal-form</module>
+        <module>parser-ast-build</module>
     </modules>
 
     <properties>
